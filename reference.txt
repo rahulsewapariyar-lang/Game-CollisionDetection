@@ -1,0 +1,30 @@
+
+	//Rectangle rect;
+	//rect.position = { 100,50 };
+	//rect.size = { 100,50 };
+
+	//Ball b;
+	//b.position = { 10,30 };
+	//b.velocity = { 5,2 };
+	//b.radius = 10;
+
+	//std::cout << "Before Update\n";
+	//std::cout << b.position.x << ", " << b.position.y << '\n';
+
+	//Update(b);
+
+	//std::cout << "After Update\n";
+	//std::cout << b.position.x << ", " << b.position.y << '\n';
+
+	//Vec2 point{ 1.0f, 2.0f };
+	//std::cout << "Hello World" << std::endl;
+	//std::cout << point.x << ", " << point.y << std::endl;
+
+	//for (int frame = 0;frame < 10;frame++){
+	//	Update(b);
+	//	if (CheckCollision(b, rect)) {
+	//		rect.visible = false;
+	//	}
+	//	std::cout << "Ball: (" << b.position.x << ", " << b.position.y << ")\n";
+	//}
+

@@ -1,0 +1,42 @@
+Course: Graphics Programming & OpenGL
+Phase 0 — Prerequisites
+
+By the end, you'll understand:
+
+Modern C++
+OpenGL 3.3 Core
+The GPU pipeline
+GLSL shaders
+2D renderer
+Sprite rendering
+Cameras
+Matrices
+Texture atlases
+Batching
+Eventually a small game engine
+
+
+Engine
+│
+├── Math (Vec2) ✅
+├── Collision ✅
+├── Window
+├── Renderer (OpenGL)
+├── Input
+├── Game Loop
+├── Ball
+├── Rectangle
+├── Physics
+└── Breakout Clone
+Why is GLAD included before GLFW?
+
+This is one of the most common interview questions.
+
+GLFW/glfw3.h may include the old Windows OpenGL headers unless told otherwise. We want GLAD to provide the OpenGL declarations instead.
+
+So the rule is:
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+Always.
