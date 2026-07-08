@@ -3,16 +3,14 @@
 
 bool CheckCollision(const Ball& ball, const Rectangle& rect
 ){
-	Vec2 center{ ball.position.x + ball.radius,
-				 ball.position.y + ball.radius
+	Vec2 center{ ball.transform.position
 	}; //the center of the ball because the position is top left and we add the radius to both x and y to get the center
 
 	//findind the half of the rectangle's width and height to get the half extents
-	Vec2 half_extents{ rect.size.x / 2.0f, rect.size.y / 2.0f };
+	Vec2 half_extents{ rect.transform.scale.x * 0.5f, rect.transform.scale.y * 0.5f };
 
 	//finding the center of the rectangle by adding the half extents to the position of the rectangle
-	Vec2 rectangle_center{ rect.position.x + half_extents.x
-				 , rect.position.y + half_extents.y };
+	Vec2 rectangle_center{ rect.transform.position };
 
 	Vec2 difference = center - rectangle_center; //finding the difference between the center of the ball and the center of the rectangle
 

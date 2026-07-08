@@ -78,5 +78,8 @@
     <ClCompile Include="src\gl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="backupmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -35,6 +35,7 @@
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="backupmain.cpp" />
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\gl.c" />
     <ClCompile Include="src\main.cpp" />

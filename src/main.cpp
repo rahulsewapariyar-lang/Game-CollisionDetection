@@ -71,11 +71,11 @@ int main() {
 	ball.transform.scale = { 0.1f,0.1f };
 
 
-	ball.velocity = { 0.0f,0.5f }; //moving in x,y directions
+	ball.velocity = { 0.3f,0.5f }; //moving in x,y directions
 	ball.radius = 0.05f;
 
 
-	float speed = 0.1f;
+	float speed = 0.4f;
 	float rectHalfHeight = rect.transform.scale.y *0.5f;
 	float rectHalfWidth = rect.transform.scale.x * 0.5f;
 
@@ -83,6 +83,7 @@ int main() {
 	float ballHalfWidth = ball.transform.scale.x * 0.5f;	
 
     float LastFrame = 0.0f;
+	bool wasColliding = false;
 	while (!glfwWindowShouldClose(window)
 		){
     	float CurrentFrame = glfwGetTime();
@@ -103,14 +104,35 @@ int main() {
 			rect.transform.position.x = -1.0f + rectHalfWidth;
 			speed = -speed;
 		}
-		if (ball.transform.position.y + ballHalfHeight > 1.0f ||
-			ball.transform.position.y - ballHalfHeight < -1.0f)
+		if (ball.transform.position.x + ball.radius > 1.0f)
 		{
+			ball.transform.position.x = 1.0 - ball.radius;
+			ball.velocity.x = -ball.velocity.x;
+		}
+		if (ball.transform.position.x - ball.radius < -1.0f)
+		{
+			ball.transform.position.x = -1.0 + ball.radius;
+			ball.velocity.x = -ball.velocity.x;
+		}
+		if (ball.transform.position.y + ball.radius > 1.0f )
+		{
+			ball.transform.position.y = 1 - ball.radius;
+			ball.velocity.y = -ball.velocity.y;
+		}
+		if (ball.transform.position.y - ball.radius < -1.0f )
+		{
+			ball.transform.position.y = -1.0f + ball.radius;
 			ball.velocity.y = -ball.velocity.y;
 		}
 		glUseProgram(shaderProgram);
 		Render(rectangleMesh, shaderProgram,rect.transform);
 		Render(ballMesh, shaderProgram, ball.transform);
+
+		bool isColliding = CheckCollision(ball, rect);
+		if (isColliding && !wasColliding) {
+			std::cout << "Collision Detected" << std::endl;
+		}
+		wasColliding = isColliding;
 		glfwSwapBuffers(window); //swap the front and back buffers to display the rendered frame
 	}	
 	
