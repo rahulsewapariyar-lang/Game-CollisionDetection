@@ -63,7 +63,7 @@ int main() {
 	Mesh ballMesh = CreateCircleMesh(0.5f,64);
 
 	Rectangle rect;
-	rect.transform.position = {0.4f,0.0f};
+	rect.transform.position = {0.0f,0.8f};
 	rect.transform.scale = { 0.3f,0.2f };
 
 	Ball ball;
@@ -92,8 +92,8 @@ int main() {
 		glfwPollEvents(); //poll events to handle user input and window events
 
 		rect.transform.position.x += speed * deltaTime;
-		ball.transform.position.x += ball.velocity.x * deltaTime;
-		ball.transform.position.y += ball.velocity.y * deltaTime;
+		ball.transform.position.x += ball.velocity.y* deltaTime;
+		ball.transform.position.y += ball.velocity.x * deltaTime;
 
 		if (rect.transform.position.x + rectHalfWidth > 1.0f){
 			speed = -speed;
@@ -103,8 +103,8 @@ int main() {
 			rect.transform.position.x = -1.0f + rectHalfWidth;
 			speed = -speed;
 		}
-		if (ball.transform.position.x + ballHalfWidth > 1.0f ||
-			ball.transform.position.x - ballHalfWidth < -1.0f)
+		if (ball.transform.position.y + ballHalfHeight > 1.0f ||
+			ball.transform.position.y - ballHalfHeight < -1.0f)
 		{
 			ball.velocity.x = -ball.velocity.x;
 		}
