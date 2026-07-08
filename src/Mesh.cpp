@@ -1,4 +1,8 @@
 #include "../include/Mesh.h"
+#include <vector>
+#include <cmath>
+
+constexpr float PI = 3.14159265358979323846f;
 
 Mesh CreateMesh(
 	const float* vertices,
@@ -40,6 +44,36 @@ Mesh CreateMesh(
 
 	return mesh;
 }
+
+ Mesh CreateCircleMesh(
+	float radius,
+	int segments
+) {
+	std::vector<float> vertices;
+
+	vertices.push_back(0.0f); //for x
+	vertices.push_back(0.0f); //for y
+
+	for (int i = 0;i <= segments;i++) {
+		float angle = (2.0f * PI * i / segments);
+
+		float x = radius * cos(angle);
+		float y = radius * sin(angle);
+
+		vertices.push_back(x);
+		vertices.push_back(y);
+	}
+	 
+	Mesh mesh = CreateMesh(
+		vertices.data(),
+		vertices.size() * sizeof(float),
+	    2
+		);
+	mesh.drawMode = GL_TRIANGLE_FAN;
+	return mesh;
+}
+
+
 void DestroyMesh(Mesh& mesh)
 {
 	glDeleteBuffers(

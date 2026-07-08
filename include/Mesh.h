@@ -6,12 +6,18 @@ struct Mesh{
 	GLuint VAO{0};
 	GLuint VBO{0};
 	GLsizei vertexCount{0};
+	GLenum drawMode{ GL_TRIANGLES };
 };
 
 Mesh CreateMesh(
 	const float* vertices,
 	size_t sizeInBytes,
 	GLint componentsPerVertex
+);
+
+Mesh CreateCircleMesh(
+	float radius,
+	int segments
 );
 
 void DestroyMesh(Mesh& mesh);
