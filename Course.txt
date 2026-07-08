@@ -40,3 +40,25 @@ So the rule is:
 #include <GLFW/glfw3.h>
 
 Always.
+
+Application (CPU)
+│
+├── Create window
+├── Create OpenGL context
+├── Create VAO
+├── Create VBO
+├── Upload vertex data
+├── Describe vertex layout
+├── Compile vertex shader
+├── Compile fragment shader
+├── Link them into a shader program
+│
+└───────────────► GPU
+
+Render Loop
+│
+├── Clear screen
+├── Use shader program
+├── Bind VAO
+├── Draw triangle
+└── Swap buffers

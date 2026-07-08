@@ -6,83 +6,63 @@
 #include "../include/Ball.h"
 #include "../include/Update.h"
 #include "../include/Collision.h"
+#include "../include/Window.h"
+#include "../include/Mesh.h"
+#include "../include/Shader.h"
+#include "../include/Renderer.h"
 
 int main() {
 
-	if (!glfwInit())
-	{
-		std::cout << "Failed to initialize GLFW\n";
-		return -1;
-	}
+	GLFWwindow* window = InitWindow(800,600,"Collision Detection");
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	const char* vertexShaderSource = R"(
 
-	GLFWwindow* window = glfwCreateWindow(
-		800,
-		600,
-		"Collision Detection",
-		nullptr,
-		nullptr
+     #version 460 core
+
+      layout(location = 0) in vec2 aPos;
+
+      void main() {
+       gl_Position = vec4(aPos, 0.0, 1.0);
+      }
+     )";
+
+
+	const char* fragmentShaderSource = R"(
+		#version 460 core
+		out vec4 FragColor;
+		void main(){
+		  FragColor = vec4(1.0, 0.5, 0.2, 1.0); 
+		} 
+		)";
+
+	GLuint shaderProgram = CreateShaderProgram(
+		vertexShaderSource,
+		fragmentShaderSource
 	);
 
-	if (!window) {
-		std::cout << "Failed to create GLFW window\n";
-		glfwTerminate();
-		return -1;
-	}
 
-	glfwMakeContextCurrent(window); //make the opengl context current so that glad can load the function pointers for the current context
-
-
-	//initialize glad to load the opengl function pointers for the current context
-	if (!gladLoadGL(glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD\n";
-		glfwTerminate();
-		return -1;
-	}
 
 	float vertices[] =
 	{
-		-0.5f, -0.5f,
-		 0.5f, -0.5f,
-		 0.0f,  0.5f
+		0.3f, 0.8f, //first triangle
+		-0.3f, 0.8f,
+		-0.3f,  0.5f,
+
+		 0.3f, 0.8f,//second triangle
+	    -0.3f, 0.5f,
+	     0.3f, 0.5f
 	};
 
-	GLuint VBO; //vbo lives in CPU ram
-	glGenBuffers(1, &VBO); //1 represents the number of buffers to generate, &VBO is the address of the buffer object name to be generated
-	glBindBuffer(GL_ARRAY_BUFFER, VBO); //bind the buffer object to the GL_ARRAY_BUFFER target so that it can be used for vertex attribute data
-
-
-	GLuint VAO; //cpu variable
-	glGenVertexArrays(1, &VAO); //creates a VAO object and stores its ID in the VAO variable
-	glBindVertexArray(VAO); // make it the current VAO
-
-
-
-	//this here will copy the data from the CPU ram to the GPU ram so that it can be used for rendering
-	glBufferData(GL_ARRAY_BUFFER,
-		sizeof(vertices),
-		vertices,//the data to be copied to the buffer object
-		GL_STATIC_DRAW); //"I'm probably going to upload this once and draw it many times."
-
-	glViewport(0, 0, 800, 600);
-
-	std::cout << "GLAD initialized successfully!\n";
-
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	Mesh rectangle = CreateMesh(vertices, sizeof(vertices), 2);
 
 	while (!glfwWindowShouldClose(window)
 		){
-
+		Clear(0.2f, 0.3f, 0.3f, 1.0f); //clear the screen with a specific color
 		glfwPollEvents(); //poll events to handle user input and window events
-		glClear(GL_COLOR_BUFFER_BIT); //clear back buffer to prepare for rendering the next frame
+		Render(rectangle, shaderProgram);
 		glfwSwapBuffers(window); //swap the front and back buffers to display the rendered frame
-
 	}
-
+	
 	glfwTerminate(); //clean up and terminate GLFW before exiting the program
 	return 0;
 }
