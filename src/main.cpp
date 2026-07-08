@@ -71,7 +71,7 @@ int main() {
 	ball.transform.scale = { 0.1f,0.1f };
 
 
-	ball.velocity = { 0.5f,0.0f };
+	ball.velocity = { 0.0f,0.5f }; //moving in x,y directions
 	ball.radius = 0.05f;
 
 
@@ -92,8 +92,8 @@ int main() {
 		glfwPollEvents(); //poll events to handle user input and window events
 
 		rect.transform.position.x += speed * deltaTime;
-		ball.transform.position.x += ball.velocity.y* deltaTime;
-		ball.transform.position.y += ball.velocity.x * deltaTime;
+		ball.transform.position.x += ball.velocity.x* deltaTime;
+		ball.transform.position.y += ball.velocity.y * deltaTime;
 
 		if (rect.transform.position.x + rectHalfWidth > 1.0f){
 			speed = -speed;
@@ -106,7 +106,7 @@ int main() {
 		if (ball.transform.position.y + ballHalfHeight > 1.0f ||
 			ball.transform.position.y - ballHalfHeight < -1.0f)
 		{
-			ball.velocity.x = -ball.velocity.x;
+			ball.velocity.y = -ball.velocity.y;
 		}
 		glUseProgram(shaderProgram);
 		Render(rectangleMesh, shaderProgram,rect.transform);
